@@ -1,0 +1,31 @@
+version: '2'
+
+services:
+
+    back-end:
+        image: tianon/true
+        volumes:
+            - "./src:/var/www/appliance"
+
+    workspace:
+        image: laradock/workspace:1.2
+        volumes_from:
+            - back-end
+
+    php-fpm:
+        build: ./docker-images/php-fpm
+        volumes_from:
+            - back-end
+        depends_on:
+            - back-end
+
+    nginx-backend:
+        build: ./docker-images/nginx
+        volumes_from:
+            - back-end
+        depends_on:
+            - back-end
+        ports:
+            - "80:80"
+        links:
+            - php-fpm
