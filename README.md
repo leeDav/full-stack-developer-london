@@ -1,15 +1,27 @@
-# Mentally Friendly - Full Stack Developer Test
+# full-stack-developer-london
 
-## The Problem
+> The answer to the question
 
-Diplay the results from a simulated feed (see data.json taken from Vimeo) onto a page and provide functionality to select a set of those results to be added to a playlist that can be later retrieved in that user session. You should not have to use a database for this.
+## Build Setup
 
-## Requirements
+``` bash
+# install dependencies
+npm install
 
-You are expected to take the approach of using Test Driven Development (TDD) for both the front-end and back-end components.
+# serve with hot reload at localhost:8080
+npm run dev
 
-The final result should have a back-end that uses this data feed and serves this to a front-end built with something like Vue.js, React, Angular 2, etc.
+# build for production with minification
+npm run build
 
-The approach to the solution is up to you to decide, but we ask the back-end be developed using Laravel.
+# run unit tests
+npm run unit
 
-The final solution should contain a lightweight Dockerfile - A Dockerfile has been provided that should achieve this. When you are finished with this test, push your docker image containing your production code to https://hub.docker.com/ and provide us a link to this image. Please fork this repository and commit your solution there.
+# run e2e tests
+npm run e2e
+
+# run all tests
+npm test
+```
+
+For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
