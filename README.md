@@ -25,3 +25,37 @@ npm test
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+# SCSS Naming conventions
+## Class naming
+I use BEM, with a splash of SMACSS thrown in for good measure.
+
+## Folder structure
+Even though this is a small project, I still like to keep my SCSS tidy.
+
+This folder structure is based on [Harry Robert's ITCSS](http://www.creativebloq.com/web-design/manage-large-css-projects-itcss-101517528) methodology.
+
+```
+  scss/
+      1-settings   // For colour/font and other variables
+      2-tools      // For any mixins or placeholders
+      3-generic    // Resets, normalisations, etc.
+      4-base       // HTML tag overrides, e.g. <a> or <body>
+      5-objects    // Custom elements, like custom dropdowns/checkboxes
+      6-components // Widgets or components, but since we're using Vue...
+      7-trumps     // As in the !important override kind, not the crazy rich man
+```
+
+It's not a complete implementation because this is still just a small project,
+but it helps enforce some sort of style should a project suddenly grow and
+we need to scale.
+
+Using the above folder structure helps keeps things reasonably sane.
+
+Usually everything would be `@import`'ed in to one `styles.css` file and we'd
+be happy. But as Vue let's us include SCSS straight in to our templates, the
+SCSS you'll find here should be more abstracted and generic -- offering helper
+or utility classes (such as `.text-right` for aligning text to the right).
+
+Using utility classes enables us to get maximum reuse from CSS and avoid
+being over-complex and re-specify rules.

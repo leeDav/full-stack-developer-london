@@ -1,0 +1,27 @@
+@import './src/scss/1-settings/variables';
+@import './src/scss/2-tools/placeholder-min-button-size';
+
+.btn__action {
+  @extend %min-button-size;
+
+  background-color: $grey-dark;
+  border: 0;
+  color: $grey-light;
+  display: block;
+  font-size: ms(-1);
+  font-weight: $fw-bold;
+  padding: ms(-3);
+  position: relative; // hack to make accessibility focus border appear over card
+  width: 100%;
+
+  &:hover {
+    background-color: lighten($grey-dark, 10%);
+    color: $grey-light;
+    cursor: pointer;
+  }
+
+  // Decrease the button height on larger screens
+  @media screen and (min-width: $size-small) {
+    font-size: ms(-2);
+  }
+}

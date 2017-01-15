@@ -1,0 +1,14 @@
+// This is a re-usuable SCSS placeholder that takes a minimum
+// button height for small screens then resets its height on larger screens
+
+// Slightly pointless for this project, but if it scales and we have more
+// buttons, then this suddenly becomes quite useful.
+@import '../1-settings/variables';
+
+%min-button-size {
+  height: $min-button-height;
+
+  @media screen and (min-width: $size-small) {
+    height: auto;
+  }
+}
