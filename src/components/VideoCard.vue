@@ -7,14 +7,19 @@
       <img src="https://i.vimeocdn.com/portrait/9507848_30x30?r=pad" class="card__info-user-thumb" />
     </div>
     <div class="card__actions">
-      <button class="btn__action">Add to playlist</button>
+      <button-add videoId="1234"></button-add>
     </div>
   </article>
 </template>
 
 <script>
+  import ButtonAdd from './ButtonAdd'
+
   export default {
-    name: 'video-card'
+    name: 'video-card',
+    components: {
+      'button-add': ButtonAdd
+    }
   }
 </script>
 

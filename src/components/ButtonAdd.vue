@@ -13,7 +13,10 @@
     },
     methods: {
       toggleItemInPlaylist: function () {
-        window.localStorage.setItem('video', this.videoId)
+        // let favourites = JSON.parse(window.localStorage.getItem('favourites')) || []
+        // favourites.push(this.videoId)
+        // favourites = JSON.stringify(favourites)
+        // window.localStorage.setItem('favourites', favourites)
         this.buttonText = (this.buttonText === 'Add') ? 'Remove' : 'Add'
         return this.buttonText
       }

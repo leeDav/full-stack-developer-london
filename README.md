@@ -1,6 +1,7 @@
 |  Master  |  Develop  |
 |:-:|:-:|
 | ![Master status](https://img.shields.io/circleci/project/github/leeDav/full-stack-developer-london/master.svg) | ![Develop status](https://img.shields.io/circleci/project/github/leeDav/full-stack-developer-london/develop.svg) |
+| [![codecov: master](https://codecov.io/gh/leeDav/full-stack-developer-london/branch/master/graph/badge.svg)](https://codecov.io/gh/leeDav/full-stack-developer-london) | [![codecov: develop](https://codecov.io/gh/leeDav/full-stack-developer-london/branch/develop/graph/badge.svg)](https://codecov.io/gh/leeDav/full-stack-developer-london) |
 
 # full-stack-developer-london
 
