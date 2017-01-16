@@ -1,13 +1,21 @@
 <template>
   <article class="card">
-    <div class="card__bg"></div>
+    <div class="card__bg" v-bind:style="{ 'background-image': 'url(' + info.pictures.sizes[2].link + ')' }"></div>
     <div class="card__info">
-      <span class="card__info-large">Jane Doe</span>
-      <span class="card__info-small ellipses">Lorem ipsum dolor salat. On the wings of an eagle</span>
-      <img src="https://i.vimeocdn.com/portrait/9507848_30x30?r=pad" class="card__info-user-thumb" />
+      <h2 class="card__info-large ellipses">
+        <a :href="info.user.link" target="_blank">{{ info.user.name }}</a>
+      </h2>
+      <h3 class="card__info-small ellipses">
+        <a :href="info.user.link" target="_blank">
+          {{ info.name }}
+        </a>
+      </h3>
+      <a :href="info.user.link" target="_blank">
+        <img :src="info.user.pictures.sizes[0].link" alt="User thumbnail" class="card__info-user-thumb" />
+      </a>
     </div>
     <div class="card__actions">
-      <button-add videoId="1234"></button-add>
+      <button-add videoId="info.resource_key"></button-add>
     </div>
   </article>
 </template>
@@ -17,6 +25,7 @@
 
   export default {
     name: 'video-card',
+    props: ['info'],
     components: {
       'button-add': ButtonAdd
     }
@@ -30,8 +39,7 @@
   @import '~modularscale-sass/stylesheets/modular-scale';
 
   // Compondent-specific vars
-  // Width of the users thumbnail in the card
-  $userThumbWidth: 30px;
+  $userThumbWidth: 30px;  // Width of the users thumbnail in the card
 
   // Defining an animation for some visual interest
   // A simple "rolling" back and forth
@@ -43,8 +51,6 @@
 
   .card {
     &:hover {
-      cursor: pointer;
-
       .card__info-user-thumb {
          -webkit-animation: keepRollingRollingRolling 1s ease 0s infinite normal ;
          animation: keepRollingRollingRolling 1s ease 0s infinite normal ;
@@ -55,7 +61,6 @@
 
   .card__bg {
     background-color: $grey-light;
-    background-image: url('https://i.vimeocdn.com/video/492928158_295x166.jpg?r=pad');
     background-position: center;
     background-size: cover;
     height: ms(13);
@@ -63,7 +68,7 @@
 
   .card__info {
     background-color: $grey-light;
-    padding: ms(-13) ms(0);
+    padding: ms(-13) 0;
     position: relative;
     text-align: center;
 
@@ -77,19 +82,16 @@
       width: $userThumbWidth;
     }
 
-    > span {
-      display: block;
-    }
-
     &-large {
       font-size: ms(1);
       font-weight: $fw-bold;
-      margin-top: .75em;
+      margin: ms(-2) 0 0;
     }
 
     &-small {
       font-size: ms(0);
       font-weight: $fw-light;
+      margin: 0 0 ms(-2);
     }
   }
 </style>
