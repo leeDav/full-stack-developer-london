@@ -1,5 +1,5 @@
 module.exports = {
-  'default e2e tests': function (browser) {
+  'checking the add button': function (browser) {
     const devServer = browser.globals.devServerURL
 
     browser

@@ -1,6 +1,6 @@
 <template>
   <article class="card">
-    <div class="card__bg" v-bind:style="{ 'background-image': 'url(' + info.pictures.sizes[2].link + ')' }"></div>
+    <div class="card__bg" v-bind:style="{ 'background-image': 'url(' + getImageBySize(info.pictures.sizes, 568, 170) + ')' }"></div>
     <div class="card__info">
       <h2 class="card__info-large ellipses">
         <a :href="info.user.link" target="_blank">{{ info.user.name }}</a>
@@ -11,7 +11,7 @@
         </a>
       </h3>
       <a :href="info.user.link" target="_blank">
-        <img :src="info.user.pictures.sizes[0].link" alt="User thumbnail" class="card__info-user-thumb" />
+        <img :src="getImageBySize(info.user.pictures.sizes, 30, 30)" alt="User thumbnail" class="card__info-user-thumb" />
       </a>
     </div>
     <div class="card__actions">
@@ -28,6 +28,29 @@
     props: ['info'],
     components: {
       'button-add': ButtonAdd
+    },
+    methods: {
+      /*  Function to get a large enough image to display whilst being the
+       *  smallest in file size and resolution. The image objects
+       *  MUST contain "width", "height", and "link" properties
+       *
+       *  @param {images} array   - Array of objects containing images
+       *  @param {minWidth} int   - Minimum width of the image to find
+       *  @param {minHeight} int  - Minimum height of the image to find
+       *  @returns {String}       - The URL to the image
+      */
+      getImageBySize: (images, minWidth, minHeight) => {
+        for (let i = 0; i < images.length; i++) {
+          if ((images[i].width >= minWidth) && (images[i].height >= minHeight)) {
+            return images[i].link
+          }
+          // If we're at the end of the array and _still_ haven't
+          // found a decent sized image, return the last one
+          if (i === (images.length - 1)) {
+            return images[i].link
+          }
+        }
+      }
     }
   }
 </script>
