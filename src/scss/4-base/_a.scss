@@ -1,0 +1,14 @@
+@import './src/scss/1-settings/variables';
+
+a {
+  color: $link-color;
+  text-decoration: none;
+
+  &:hover {
+    color: $link-color-hover;
+  }
+
+  img {
+    border: 0; // Stops IE from showing borders on linked images
+  }
+}
