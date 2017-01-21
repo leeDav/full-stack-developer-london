@@ -50,6 +50,8 @@
   }
 
   .card {
+    margin-bottom: ms(3);
+
     &:hover {
       .card__info-user-thumb {
          -webkit-animation: keepRollingRollingRolling 1s ease 0s infinite normal ;
@@ -68,16 +70,16 @@
 
   .card__info {
     background-color: $grey-light;
-    padding: ms(-13) 0;
+    padding: ms(-13) ms(0);
     position: relative;
     text-align: center;
 
     &-user-thumb {
-      border-radius: 50%;
-      position: absolute;
       // Position the thumb in the middle
       // (width divided by 2, offset by 50% width)
+      border-radius: 50%;
       left: calc(50% - (#{$userThumbWidth} / 2));
+      position: absolute;
       top: -15px;
       width: $userThumbWidth;
     }
