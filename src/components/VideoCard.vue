@@ -15,22 +15,83 @@
       </a>
     </div>
     <div class="card__actions">
-      <button-add videoId="info.resource_key"></button-add>
+      <button class="btn__action"
+        @click="togglePlaylistEntry()"
+         v-bind:class="{'btn__action-active': isInPlaylist()}">{{ buttonText }}</button>
     </div>
   </article>
 </template>
 
 <script>
-  import ButtonAdd from './ButtonAdd'
-
   export default {
     name: 'video-card',
     props: ['info'],
-    components: {
-      'button-add': ButtonAdd
+    data () {
+      return {
+        localStore: 'favourites', // What name to give our localStorage
+        video: this.info, // Passed from prop
+        buttonText: null,
+        buttonText_add: 'Add to playlist',
+        buttonText_remove: 'Remove from playlist'
+      }
+    },
+    created () {
+      this.buttonText = this.setButtonText()
     },
     methods: {
-      /*  Function to get a large enough image to display whilst being the
+      /**
+       * Detects if the current video (as set from props) is in the playlist
+       *        and returns true/false accordingly
+       * @return {boolean}
+       */
+      isInPlaylist: function () {
+        let store = JSON.parse(window.localStorage.getItem(this.localStore) || '[]')
+        if (store.indexOf(this.video.resource_key) === -1) {
+          return false
+        }
+        return true
+      },
+      /**
+       * Sets the text of the button depending on whether it's in the playlist
+       *
+       * @return {String}  description
+       */
+      setButtonText: function () {
+        return this.isInPlaylist() ? this.buttonText_remove : this.buttonText_add
+      },
+      /**
+       * Triggered by the click event of the button. Adds the video to the
+       * playlist if it's not already in there, and removes it if it is
+       */
+      togglePlaylistEntry: function () {
+        if (this.isInPlaylist()) {
+          this.removeFromPlaylist()
+        } else {
+          this.addToPlaylist()
+        }
+        this.buttonText = this.setButtonText()
+      },
+      /**
+       * Adds the video to localStorage
+       */
+      addToPlaylist: function () {
+        let store = JSON.parse(window.localStorage.getItem(this.localStore) || '[]')
+        store.push(this.video.resource_key)
+        window.localStorage.setItem(this.localStore, JSON.stringify(store))
+      },
+      /**
+       * Removes the video from localStorage
+       */
+      removeFromPlaylist: function () {
+        let store = JSON.parse(window.localStorage.getItem(this.localStore))
+        let index = store.indexOf(this.video.resource_key)
+        if (index > -1) {
+          store.splice(index, 1)
+        }
+        window.localStorage.setItem(this.localStore, JSON.stringify(store))
+      },
+      /**
+       *  Function to get a large enough image to display whilst being the
        *  smallest in file size and resolution. The image objects
        *  MUST contain "width", "height", and "link" properties
        *
@@ -44,8 +105,9 @@
           if ((images[i].width >= minWidth) && (images[i].height >= minHeight)) {
             return images[i].link
           }
-          // If we're at the end of the array and _still_ haven't
-          // found a decent sized image, return the last one
+          // If we're at the end of the array and _still_ haven't found a
+          // decent sized image, assume the last one in array is the
+          // biggest and return that
           if (i === (images.length - 1)) {
             return images[i].link
           }

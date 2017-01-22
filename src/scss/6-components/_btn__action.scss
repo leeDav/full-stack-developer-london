@@ -6,6 +6,7 @@
 
   background-color: $grey-dark;
   border: 0;
+  border-radius: 0;
   color: $grey-light;
   display: block;
   font-size: ms(-1);
@@ -14,14 +15,19 @@
   position: relative; // hack to make accessibility focus border appear over card
   width: 100%;
 
+  // Decrease the button height on larger screens
+  @media screen and (min-width: $size-small) {
+    font-size: ms(-2);
+  }
+
   &:hover {
     background-color: lighten($grey-dark, 10%);
     color: $grey-light;
     cursor: pointer;
   }
 
-  // Decrease the button height on larger screens
-  @media screen and (min-width: $size-small) {
-    font-size: ms(-2);
+  &-active {
+    background-color: darken($grey-light,50%);
+    color: $grey-light;
   }
 }
