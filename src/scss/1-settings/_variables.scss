@@ -1,0 +1,25 @@
+// Responsive sizes, quick'n'basic for now, ripped from Foundation 6
+$size-small:   568px;
+$size-medium:  736px;
+$size-large:   1024px;
+$size-xlarge:  1280px;
+
+// Colours
+$main-body:   #a6c0c5;
+$grey-light:  #fafafa;
+$grey-dark:   #333;
+$link-color:  #4d7298;
+$link-color-hover:  darken($main-body, 20%);
+
+// Modular scale is an awesome way to maintain vertical rhythm
+// See: http://www.modularscale.com/
+$ms-base: 1em;
+$ms-ratio: 1.2;
+
+// Font weights
+$fw-light:    300;
+$fw-normal:   400;
+$fw-bold:     700;
+
+ // Mobile button height for fat thumbs
+$min-button-height: 44px;

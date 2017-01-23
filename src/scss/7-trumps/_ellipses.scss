@@ -1,0 +1,7 @@
+// Truncates long sentences to the width of its container
+// by adding an ellipses (...)
+.ellipses {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
