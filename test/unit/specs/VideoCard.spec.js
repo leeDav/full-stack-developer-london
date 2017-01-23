@@ -31,7 +31,22 @@ describe('Displaying a video card', () => {
     expect(window.localStorage.getItem(VM.$data.localStore)).to.be.null
   })
 
-  it('should add and remove from localStorage', () => {
+  it('should test localStorage', () => {
+    let spy = sinon.spy()
+    window.localStorage.setItem = spy
+    let Instance = Vue.extend(VideoCard)
+    const VM = new Instance({
+      propsData: {
+        info: ''
+      }
+    })
+
+    VM.localStorageUpdate(spy)
+
+    expect(spy.calledOnce).to.be.true
+  })
+
+  it('should add/remove and check whether videos are in the playlist', () => {
     let Instance = Vue.extend(VideoCard)
     const VM = new Instance({
       propsData: {

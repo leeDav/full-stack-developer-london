@@ -148,7 +148,8 @@
   }
 
   .card {
-    margin-bottom: ms(3);
+    //margin-bottom: ms(3);
+    margin: ms(1) 0;
 
     &:hover {
       .card__info-user-thumb {

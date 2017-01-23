@@ -1,9 +1,26 @@
 <template>
   <div id="app">
     <div class="row">
-      <div class="small-12 medium-6 large-4 columns" v-for="video in results">
-        <video-card :info="video"></video-card>
+      <div class="small-12">
+        <paginate-links
+          for="vids"
+          :show-step-links="true"
+          :classes="{
+            'ul': 'pagination__container'
+          }"></paginate-links>
       </div>
+    </div>
+
+    <div class="row">
+      <paginate
+        name="vids"
+        :list="results"
+        :per="6"
+        tag="div">
+          <div class="small-12 medium-6 large-4 columns" v-for="video in paginated('vids')">
+            <video-card :info="video"></video-card>
+          </div>
+      </paginate>
     </div>
   </div>
 </template>
@@ -22,7 +39,8 @@
     data () {
       return {
         API: './static/data.json',
-        results: null
+        results: [],
+        paginate: ['vids']
       }
     },
     created () {
@@ -45,10 +63,29 @@
 </script>
 
 <style lang="scss">
-  @import "./src/scss/main";
+  @import './src/scss/main';
+  @import './src/scss/1-settings/variables';
+
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  .pagination__container {
+    background-color: $grey-light;
+
+    padding: 0;
+    text-align: center;
+
+    > li {
+      cursor: pointer;
+      display: inline-block;
+      margin: ms(-1);
+
+      &.active {
+        font-weight: $fw-bold;
+      }
+    }
   }
 </style>
