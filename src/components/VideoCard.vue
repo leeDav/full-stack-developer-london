@@ -16,8 +16,8 @@
     </div>
     <div class="card__actions">
       <button class="btn__action"
-        @click="togglePlaylistEntry()"
-         v-bind:class="{'btn__action-active': isInPlaylist()}">{{ buttonText }}</button>
+        @click="togglePlaylistEntry(info.resource_key)"
+         v-bind:class="{'btn__action-active': isInPlaylist(info.resource_key)}">{{ setButtonText(info.resource_key) }}</button>
     </div>
   </article>
 </template>
@@ -30,23 +30,28 @@
       return {
         localStore: 'favourites', // What name to give our localStorage
         video: this.info, // Passed from prop
-        buttonText: null,
         buttonText_add: 'Add to playlist',
-        buttonText_remove: 'Remove from playlist'
+        buttonText_remove: 'Remove from playlist',
+        store: []
       }
     },
     created () {
-      this.buttonText = this.setButtonText()
+      // Define the store as either whatever is already saved, or as an empty array
+      this.store = JSON.parse(window.localStorage.getItem(this.localStore)) || []
+    },
+    watch: {
+      store: 'localStorageUpdate' // Call `localStorageUpdate` everytime `store` is changed
     },
     methods: {
       /**
        * Detects if the current video (as set from props) is in the playlist
        *        and returns true/false accordingly
+       *
+       * @param {image} String    - Resouce key/ID of the image to check
        * @return {boolean}
        */
-      isInPlaylist: function () {
-        let store = JSON.parse(window.localStorage.getItem(this.localStore) || '[]')
-        if (store.indexOf(this.video.resource_key) === -1) {
+      isInPlaylist: function (image) {
+        if (this.store.indexOf(image) === -1) {
           return false
         }
         return true
@@ -54,41 +59,43 @@
       /**
        * Sets the text of the button depending on whether it's in the playlist
        *
+       * @param {image} String    - Resouce key/ID of the image to get text for
        * @return {String}  description
        */
-      setButtonText: function () {
-        return this.isInPlaylist() ? this.buttonText_remove : this.buttonText_add
+      setButtonText: function (image) {
+        return this.isInPlaylist(image) ? this.buttonText_remove : this.buttonText_add
       },
       /**
        * Triggered by the click event of the button. Adds the video to the
        * playlist if it's not already in there, and removes it if it is
+       *
+       * @param {image} String    - Resouce key/ID of the image to toggle
        */
-      togglePlaylistEntry: function () {
-        if (this.isInPlaylist()) {
-          this.removeFromPlaylist()
+      togglePlaylistEntry: function (image) {
+        if (this.isInPlaylist(image)) {
+          this.removeFromPlaylist(image)
         } else {
-          this.addToPlaylist()
+          this.addToPlaylist(image)
         }
-        this.buttonText = this.setButtonText()
       },
       /**
        * Adds the video to localStorage
+       *
+       * @param {image} String    - Resouce key/ID of the image to add
        */
-      addToPlaylist: function () {
-        let store = JSON.parse(window.localStorage.getItem(this.localStore) || '[]')
-        store.push(this.video.resource_key)
-        window.localStorage.setItem(this.localStore, JSON.stringify(store))
+      addToPlaylist: function (image) {
+        this.store.push(image)
       },
       /**
        * Removes the video from localStorage
+       *
+       * @param {image} String    - Resouce key/ID of the image to remove
        */
-      removeFromPlaylist: function () {
-        let store = JSON.parse(window.localStorage.getItem(this.localStore))
-        let index = store.indexOf(this.video.resource_key)
+      removeFromPlaylist: function (image) {
+        let index = this.store.indexOf(image)
         if (index > -1) {
-          store.splice(index, 1)
+          this.store.splice(index, 1)
         }
-        window.localStorage.setItem(this.localStore, JSON.stringify(store))
       },
       /**
        *  Function to get a large enough image to display whilst being the
@@ -112,6 +119,12 @@
             return images[i].link
           }
         }
+      },
+      /**
+       * Updates the localStorage, triggered from a watch() function
+       */
+      localStorageUpdate: function () {
+        window.localStorage.setItem(this.localStore, JSON.stringify(this.store))
       }
     }
   }
