@@ -2,8 +2,8 @@ import Vue from 'vue'
 import VideoCard from 'src/components/VideoCard'
 
 describe('Displaying a video card', () => {
-  afterEach(function () {
-    window.localStorage.removeItem('favourites')
+  beforeEach(function () {
+    window.localStorage.clear()
   })
 
   it('should get the props data, else it gets the hose again', () => {
@@ -14,8 +14,11 @@ describe('Displaying a video card', () => {
       }
     })
 
+    let mockImages = { 'resource_key': 'ABCD1234' }
+
     expect(VM.$data.video).to.equal('')
-    expect(VM.$data.buttonText).to.equal(VM.$data.buttonText_add)
+    expect(VM.setButtonText(mockImages.resource_key))
+            .to.equal(VM.$data.buttonText_add)
   })
 
   it('should begin with an empty localStorage', () => {
@@ -25,7 +28,6 @@ describe('Displaying a video card', () => {
         info: ''
       }
     })
-
     expect(window.localStorage.getItem(VM.$data.localStore)).to.be.null
   })
 
@@ -34,27 +36,21 @@ describe('Displaying a video card', () => {
     const VM = new Instance({
       propsData: {
         info: {
-          resource_key: 'the_video_id'
+          resource_key: ''
         }
       }
     })
-    // localStorage variable
-    let store = JSON.parse(window.localStorage.getItem(VM.$data.localStore))
-    expect(store).to.be.null
-    // Add "the_video_id" video to localStorage
-    VM.togglePlaylistEntry()
-    // Update localStorage variable
-    store = JSON.parse(window.localStorage.getItem(VM.$data.localStore))
-    // Some tests
-    expect(store.length).to.equal(1)
-    expect(VM.isInPlaylist()).to.be.true
-    // Remove the video from the playlist
-    VM.togglePlaylistEntry()
-    // Update localStorage variable
-    store = JSON.parse(window.localStorage.getItem(VM.$data.localStore))
-    // Tests
-    expect(store.length).to.equal(0)
-    expect(VM.isInPlaylist()).to.be.false
+
+    let mockImages = { 'resource_key': 'ABCD1234' }
+    expect(VM.setButtonText(mockImages.resource_key)).to.equal(VM.$data.buttonText_add)
+
+    VM.togglePlaylistEntry(mockImages.resource_key)
+    expect(VM.isInPlaylist(mockImages.resource_key)).to.be.true
+    expect(VM.setButtonText(mockImages.resource_key)).to.equal(VM.$data.buttonText_remove)
+
+    VM.togglePlaylistEntry(mockImages.resource_key)
+    expect(VM.isInPlaylist(mockImages.resource_key)).to.be.false
+    expect(VM.setButtonText(mockImages.resource_key)).to.equal(VM.$data.buttonText_add)
   })
 
   it('should select an appropriately sized image; not too big, not too small', () => {
