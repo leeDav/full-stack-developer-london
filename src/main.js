@@ -5,6 +5,9 @@ import Foundation from './assets/css/foundation.min.css'
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import VuePaginate from 'vue-paginate'
+
+Vue.use(VuePaginate)
 
 /* eslint-disable no-new */
 new Vue({

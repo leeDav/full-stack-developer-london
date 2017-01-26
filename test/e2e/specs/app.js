@@ -4,7 +4,7 @@ module.exports = {
 
     browser
       .url(devServer)
-      .waitForElementVisible('#app', 5000)
+      .waitForElementVisible('.card', 5000)
       .assert.elementPresent('.card')
       .end()
   }

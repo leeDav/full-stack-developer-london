@@ -29,7 +29,7 @@ describe('try and load some data from somewhere', () => {
     })
 
     const VM = new Vue(App)
-    expect(VM.$data.results).to.be.null
+    expect(VM.$data.results).to.have.length(0)
 
     VM.getData().then(() => {
       expect(VM.$data.results).to.be.an('array')
@@ -46,7 +46,7 @@ describe('try and load some data from somewhere', () => {
     })
 
     const VM = new Vue(App)
-    expect(VM.$data.results).to.be.null
+    expect(VM.$data.results).to.have.length(0)
 
     VM.getData().then(() => {
       expect(VM.$data.results).to.be.an('error')
